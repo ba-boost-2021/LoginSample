@@ -5,6 +5,11 @@ namespace LoginSample.Common;
 
 public class EntityBase
 {
+    public EntityBase()
+    {
+        IsActive = true;
+        IsDeleted = false;
+    }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Key]
     public Guid Id { get; set; }

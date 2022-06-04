@@ -10,12 +10,21 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration)
     {
-        var section = configuration.GetSection($"{nameof(Settings)}:Database");
-        var settings = section.Get<Settings.DatabaseConfiguration>();
+        var section = configuration.GetSection($"{nameof(Settings)}");
+        var settings = section.Get<Settings>();
         services.AddDbContext<LoginSampleDbContext>(builder =>
         {
-            builder.UseSqlServer(settings.ConnectionString);
+            builder.UseSqlServer(settings.Database.ConnectionString);
         });
         return services;
     }
 }
+
+/*
+ 
+ "Settings": {
+    "Database": {
+      "ConnectionString": "Server=localhost,20000;Database=LoginSampleDb;User Id=sa;Password=Bilgeadam123!"
+    }
+  }
+ */

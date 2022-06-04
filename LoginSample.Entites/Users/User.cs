@@ -9,9 +9,9 @@ public class User : EntityBase
     [MaxLength(30)]
     public string Mail { get; set; }
     [Required]
-    [MaxLength(30)]
-    public string Password { get; set; }
     [MaxLength(128)]
+    public string Password { get; set; }
+    [MaxLength(32)]
     public string Hash { get; set; }
     [MaxLength(30)]
     public string DisplayName { get; set; }
