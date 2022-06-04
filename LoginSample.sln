@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSample", "LoginSample\LoginSample.csproj", "{930BC12B-D7C2-46B3-85F0-704553EA5863}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginSample", "LoginSample\LoginSample.csproj", "{930BC12B-D7C2-46B3-85F0-704553EA5863}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{1D125240-B9A1-4534-9F3D-6CD1F3954253}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E016A04F-0D7A-4FA1-A837-911C3521FA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSample.Entites", "LoginSample.Entites\LoginSample.Entites.csproj", "{A8ADA369-C567-4E7F-9C9A-12C69F6C6AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginSample.Entites", "LoginSample.Entites\LoginSample.Entites.csproj", "{A8ADA369-C567-4E7F-9C9A-12C69F6C6AEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{0BCCEFD4-CE46-48D8-AEE4-B2DFF6F25DBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSample.Common", "LoginSample.Common\LoginSample.Common.csproj", "{74F52ECC-943C-4762-A08E-AA655310D90A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginSample.Common", "LoginSample.Common\LoginSample.Common.csproj", "{74F52ECC-943C-4762-A08E-AA655310D90A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5F6A46F5-9440-4085-BDB1-35E66954253B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSample.Service", "LoginSample.Service\LoginSample.Service.csproj", "{9D5D7AE6-5600-4E7F-8550-C8BD0D7CE63A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginSample.Service", "LoginSample.Service\LoginSample.Service.csproj", "{9D5D7AE6-5600-4E7F-8550-C8BD0D7CE63A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entites", "Entites", "{A00B9D76-6B95-402D-8A65-CC776C2A7803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSample.Data", "LoginSample.Data\LoginSample.Data.csproj", "{3DB4625A-7CAA-4C52-99DE-692469A9CB70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginSample.Data", "LoginSample.Data\LoginSample.Data.csproj", "{3DB4625A-7CAA-4C52-99DE-692469A9CB70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
