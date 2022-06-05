@@ -12,6 +12,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDataServices();
 builder.Services.AddData(builder.Configuration);
 
+
+builder.Services.AddCors(option => { option.AddPolicy("all", p => { p.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader(); }); });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("all");
 app.UseAuthorization();
 
 app.MapControllers();
