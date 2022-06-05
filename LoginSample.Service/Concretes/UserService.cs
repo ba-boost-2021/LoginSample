@@ -35,7 +35,7 @@ namespace LoginSample.Service.Concretes
                 Password = password,
                 Hash = hash,
                 DisplayName = dto.DisplayName,
-                VerificationCode = Guid.NewGuid(),
+                RefreshToken = Guid.NewGuid(),
                 CreatedAt = DateTime.Now,
                 UserType = Common.Enums.UserType.Admin
             };
@@ -61,7 +61,7 @@ namespace LoginSample.Service.Concretes
             {
                 Token = token,
                 ExpireAt = DateTime.Now.AddMinutes(option.Value.Jwt.Expires),
-                RefreshToken = entity.VerificationCode.ToString(),
+                RefreshToken = entity.RefreshToken.ToString(),
             };
             return result;
 

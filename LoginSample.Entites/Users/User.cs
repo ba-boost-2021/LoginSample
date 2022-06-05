@@ -17,7 +17,7 @@ public class User : EntityBase
     public string DisplayName { get; set; }
     [MaxLength(30)]
     public string Phone { get; set; }
-    public Guid VerificationCode { get; set; }
+    public Guid RefreshToken { get; set; }
     public UserType UserType { get; set; }
 
 }
