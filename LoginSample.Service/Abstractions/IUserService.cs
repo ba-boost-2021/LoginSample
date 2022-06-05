@@ -10,5 +10,6 @@ namespace LoginSample.Service.Abstractions
     public interface IUserService
     {
         bool CreateNewUser(NewUserDto dto);
+        AuthenticationResult SignIn(SignInUserDto dto);
     }
 }

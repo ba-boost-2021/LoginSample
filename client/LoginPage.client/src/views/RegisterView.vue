@@ -1,8 +1,8 @@
 <template>
   <div class="mt-5 row justify-content-center">
-    <div class="col-4">
-      <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist"></ul>
-
+    <div class="col-5">
+      <div v-if="isFailed" class="alert alert-warning">Kayıt işlemi Başarısız</div>
+      <div v-if="isSuccess" class="alert alert-success">Kayıt işlemi Başarılı</div>
       <div class="tab-content">
         <div class="tab-pane fade show active" v-if="step == 1">
           <div class="form-outline mb-4">
@@ -12,7 +12,6 @@
               id="loginName"
               class="form-control"
               v-model="mail"
-              style="width: fit-content"
             />
           </div>
 
@@ -23,8 +22,22 @@
               id="loginPassword"
               class="form-control"
               v-model="password"
-              style="width: fit-content"
             />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="loginPassword">Password Again</label>
+            <input
+              type="password"
+              id="loginPassword"
+              class="form-control"
+              v-model="passwordAgain"
+            />
+            <span
+              v-if="passwordAlert == true"
+              class="text-muted"
+              style="color: red !important; font-size: smaller"
+              >parola eşleşmedi</span
+            >
           </div>
           <div class="form-outline mb-4">
             <label class="form-label" for="phone">Phone</label>
@@ -33,7 +46,6 @@
               id="phone"
               class="form-control"
               v-model="phone"
-              style="width: fit-content"
             />
           </div>
           <div class="form-outline mb-4">
@@ -43,7 +55,6 @@
               id="displayName"
               class="form-control"
               v-model="displayName"
-              style="width: fit-content"
             />
           </div>
           <button
@@ -64,6 +75,11 @@ export default {
     return {
       mail: null,
       password: null,
+      passwordAgain: null,
+      passwordMatched: false,
+      passwordAlert: false,
+      isSuccess: false,
+      isFailed: false,
       step: 1,
       phone: null,
       displayName: null,
@@ -71,6 +87,13 @@ export default {
   },
   methods: {
     register() {
+      this.passwordAlert = false;
+      this.isSuccess = false;
+      this.isFailed = false;
+      if (!this.passwordMatched) {
+        this.passwordAlert = true;
+        return;
+      }
       let data = {
         Mail: this.mail,
         Password: this.password,
@@ -81,14 +104,19 @@ export default {
         .post("api/user/add", data)
         .then((response) => {
           if (response) {
-            console.log("Başarılı");
+            this.isSuccess = true;
           }
         })
         .catch((response) => {
           if (response) {
-            console.log("Başarısız!");
+            this.isFailed = true;
           }
         });
+    },
+  },
+  watch: {
+    passwordAgain: function (newValue) {
+      this.passwordMatched = newValue == this.password;
     },
   },
 };

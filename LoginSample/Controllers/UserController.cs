@@ -1,12 +1,13 @@
 ﻿using LoginSample.Data.Dto;
 using LoginSample.Service.Abstractions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoginSample.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService service;
@@ -16,6 +17,7 @@ namespace LoginSample.Controllers
             this.service = service;
         }
         [HttpPost("add")]
+        [AllowAnonymous]
         public IActionResult CreateNewUser([FromBody] NewUserDto dto)
         {
            
@@ -25,6 +27,17 @@ namespace LoginSample.Controllers
                 return BadRequest();
             }
             return Ok();
+        }
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public IActionResult SignIn([FromBody] SignInUserDto dto)
+        {
+            var result = service.SignIn(dto);
+            if(result is null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
         }
     }
 }

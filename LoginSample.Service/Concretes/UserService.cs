@@ -1,18 +1,25 @@
-﻿using LoginSample.Common.Extensions;
+﻿using LoginSample.Common;
+using LoginSample.Common.Extensions;
 using LoginSample.Data.Context;
 using LoginSample.Data.Dto;
 using LoginSample.Entites.Users;
 using LoginSample.Service.Abstractions;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace LoginSample.Service.Concretes
 {
     internal class UserService : IUserService
     {
         private readonly LoginSampleDbContext dbContext;
+        private readonly IOptions<Settings> option;
 
-        public UserService(LoginSampleDbContext dbContext)
+        public UserService(LoginSampleDbContext dbContext, IOptions<Settings> option)
         {
             this.dbContext = dbContext;
+            this.option = option;
         }
 
         public bool CreateNewUser(NewUserDto dto)
@@ -34,6 +41,50 @@ namespace LoginSample.Service.Concretes
             };
             dbContext.Add(@new);
             return dbContext.SaveChanges() > 0;
+        }
+
+        public AuthenticationResult SignIn(SignInUserDto dto)
+        {
+            var entity = dbContext.Users.SingleOrDefault(x => x.Mail == dto.Mail && x.IsActive && !x.IsDeleted);
+            if(entity == null)
+            {
+                return null;
+            }
+            var password = (entity.Hash + dto.Password).ComputeHash();
+            if(entity.Password != password)
+            {
+                return null;
+            }
+
+            var token = GetJwtToken();
+            var result = new AuthenticationResult()
+            {
+                Token = token,
+                ExpireAt = DateTime.Now.AddMinutes(option.Value.Jwt.Expires),
+                RefreshToken = entity.VerificationCode.ToString(),
+            };
+            return result;
+
+        }
+
+        private string GetJwtToken()
+        {
+            var claims = new Dictionary<string, object>();
+            claims.Add("UserId", 1);
+            claims.Add("Culture", "tr-TR");
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Expires = DateTime.Now.AddMinutes(option.Value.Jwt.Expires),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(option.Value.Jwt.Key)),
+                                                            SecurityAlgorithms.HmacSha256Signature),
+                Claims = claims,
+                IssuedAt = DateTime.Now,
+                NotBefore = DateTime.Now
+            };
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.CreateToken(tokenDescriptor);
+            return handler.WriteToken(token);
         }
     }
 }
