@@ -20,12 +20,24 @@ import HelloWorld from "@/components/HelloWorld.vue";
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/register">Register</RouterLink>
+        <RouterLink v-if="show" to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
 </template>
+<script>
+import session from "./helpers/session.js";
+export default {
+  computed: {
+    show() {
+     return !session.isAuthenticated(); 
+    }
+  },
+
+}
+</script>
 
 <style>
 @import "@/assets/base.css";

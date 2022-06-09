@@ -18,7 +18,7 @@ namespace LoginSample.Controllers
         }
         [HttpPost("add")]
         [AllowAnonymous]
-        public IActionResult CreateNewUser([FromBody] NewUserDto dto)
+        public IActionResult Register([FromBody] NewUserDto dto)
         {
            
             var result = service.CreateNewUser(dto);
@@ -38,6 +38,16 @@ namespace LoginSample.Controllers
                 return BadRequest();
             }
             return Ok(result);
+        }
+        [HttpGet("list")]
+        public IActionResult GetAllUsers()
+        {
+            var result = service.GetAllUsers();
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+            return BadRequest();
         }
     }
 }

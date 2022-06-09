@@ -43,6 +43,11 @@ namespace LoginSample.Service.Concretes
             return dbContext.SaveChanges() > 0;
         }
 
+        public List<User> GetAllUsers()
+        {
+            return dbContext.Users.ToList();
+        }
+
         public AuthenticationResult SignIn(SignInUserDto dto)
         {
             var entity = dbContext.Users.SingleOrDefault(x => x.Mail == dto.Mail && x.IsActive && !x.IsDeleted);
