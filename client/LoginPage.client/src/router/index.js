@@ -33,10 +33,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.fullPath == "/login") {
+  if (to.fullPath == "/login" || to.fullPath == "/register") {
     return next();
   }
   if (!session.isAuthenticated()) {
+    session.logOut();
     router.push("/login");
   } else {
     return next();

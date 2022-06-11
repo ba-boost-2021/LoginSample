@@ -48,6 +48,31 @@ namespace LoginSample.Service.Concretes
             return dbContext.Users.ToList();
         }
 
+        public AuthenticationResult RefreshToken(RefreshTokenDto dto)
+        {
+            var entity = dbContext.Users.SingleOrDefault(x => x.Id == dto.UserId && x.IsActive && !x.IsDeleted);
+            if (entity == null)
+            {
+                return null;
+            }
+            if(entity.RefreshToken != dto.RefreshToken)
+            {
+                return null;
+            }
+            var token = GetJwtToken();
+            entity.RefreshToken = Guid.NewGuid();
+            var result = new AuthenticationResult()
+            {
+                Token = token,
+                ExpireAt = DateTime.Now.AddMinutes(option.Value.Jwt.Expires),
+                RefreshToken = entity.RefreshToken.ToString(),
+                UserId = entity.Id
+            };
+            dbContext.Update(entity);
+            dbContext.SaveChanges();
+            return result;
+        }
+
         public AuthenticationResult SignIn(SignInUserDto dto)
         {
             var entity = dbContext.Users.SingleOrDefault(x => x.Mail == dto.Mail && x.IsActive && !x.IsDeleted);
@@ -67,6 +92,7 @@ namespace LoginSample.Service.Concretes
                 Token = token,
                 ExpireAt = DateTime.Now.AddMinutes(option.Value.Jwt.Expires),
                 RefreshToken = entity.RefreshToken.ToString(),
+                UserId = entity.Id
             };
             return result;
 

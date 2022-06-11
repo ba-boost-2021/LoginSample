@@ -49,5 +49,15 @@ namespace LoginSample.Controllers
             }
             return BadRequest();
         }
+        [HttpPost("refresh")]
+        public IActionResult Refreshtoken([FromBody] RefreshTokenDto dto)
+        {
+            var result = service.RefreshToken(dto);
+            if (result is null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
     }
 }

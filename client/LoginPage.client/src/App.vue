@@ -1,44 +1,42 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
-</script>
-
 <template>
-  <header>
-    <img
+  <div class="d-flex justify-content-center flex-wrap">
+        <img
       alt="Vue logo"
       class="logo"
       src="@/assets/logo.svg"
       width="125"
       height="125"
     />
-
     <div class="container">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-        <RouterLink v-if="show" to="/login">Login</RouterLink>
+        <RouterLink to="/users">Users</RouterLink>
+        <a href="#" @click="logOut">Logout</a>
       </nav>
     </div>
-  </header>
-
-  <RouterView />
+    <div class="container mt-5">
+      <RouterView />
+    </div>
+  </div>
 </template>
 <script>
+import { RouterLink, RouterView } from "vue-router";
 import session from "./helpers/session.js";
 export default {
-  computed: {
-    show() {
-     return !session.isAuthenticated(); 
-    }
+  name: "App",
+  component: {
+    RouterLink,
+    RouterView,
   },
-
-}
+  methods: {
+    logOut() {
+      session.logOut();
+      location.reload();
+    },
+  },
+};
 </script>
-
 <style>
 @import "@/assets/base.css";
 
@@ -98,41 +96,4 @@ nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>

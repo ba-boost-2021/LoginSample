@@ -27,9 +27,12 @@
               v-model="password"
             />
           </div>
-          <button class="btn btn-primary btn-block mb-4 w-100" @click="login">
-            Login
-          </button>
+          <div class="d-flex justify-content-center flex-wrap">
+            <button class="btn btn-primary btn-block mb-4 w-100" @click="login">
+              Login
+            </button>
+            <a href="/register">register</a>
+          </div>
         </div>
       </div>
     </div>
@@ -46,6 +49,11 @@ export default {
       password: null,
       mail: null,
     };
+  },
+  mounted() {
+    if (session.isAuthenticated()) {
+      this.$router.push("/");
+    }
   },
   methods: {
     login() {
@@ -72,4 +80,5 @@ export default {
 };
 </script>
 <style scoped>
+
 </style>

@@ -13,5 +13,6 @@ namespace LoginSample.Service.Abstractions
         bool CreateNewUser(NewUserDto dto);
         AuthenticationResult SignIn(SignInUserDto dto);
         List<User> GetAllUsers();
+        AuthenticationResult RefreshToken(RefreshTokenDto dto);
     }
 }

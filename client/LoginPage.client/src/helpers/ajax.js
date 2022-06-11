@@ -10,7 +10,7 @@ export default {
         headers: {
         }
       }
-      let token = session.getToken();
+      let token = session.checkAndGetToken(instance);
       if (token) {
         config.headers["Authorization"] = "Bearer " + token;
       }
